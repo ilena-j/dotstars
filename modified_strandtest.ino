@@ -10,11 +10,11 @@
 #include <SPI.h>         // COMMENT OUT THIS LINE FOR GEMMA OR TRINKET
 //#include <avr/power.h> // ENABLE THIS LINE FOR GEMMA OR TRINKET
 
-#define NUMPIXELS 72 // Number of LEDs in strip
+#define NUMPIXELS 72 // Number of LEDs in strip (there are actually 71)
 
 // Here's how to control the LEDs from any two pins:
-#define DATAPIN    4
-#define CLOCKPIN   5
+#define DATAPIN    4  // green boi
+#define CLOCKPIN   5  // yellow boi
 Adafruit_DotStar strip = Adafruit_DotStar(
   NUMPIXELS, DATAPIN, CLOCKPIN, DOTSTAR_BRG);
 // The last parameter is optional -- this is the color data order of the
@@ -40,7 +40,7 @@ void setup() {
 // This requires about 200 mA for all the 'on' pixels + 1 mA per 'off' pixel.
 
 int      head  = 1, tail = 0, head_delta = 1, tail_delta = 1; // Index of first 'on' and 'off' pixels
-uint32_t color = 0x110000;      // 'On' color (starts red)
+uint32_t color = 0x110000;      // 'On' color (starts green) 
 
 void loop() {
 
@@ -53,8 +53,8 @@ void loop() {
   tail += tail_delta;
   if(head >= NUMPIXELS || head < 0) {         // Increment head index.  Off end of strip?
     head_delta = -head_delta;
-    if((color >>= 8) == 0)          //  Next color (R->G->B) ... past blue now?
-      color = 0x110000;             //   Yes, reset to red
+    if((color >>= 8) == 0)          //  Next color (G->R->B) ... past blue now?
+      color = 0x110000;             //   Yes, reset to green
   }
   if(tail >= NUMPIXELS || tail < 0)
       tail_delta = -tail_delta; // Increment, reset tail index
